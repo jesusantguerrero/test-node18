@@ -1,8 +1,4 @@
-const endpoint = 'https://dev.to/api/'
-
-const getArticles = (username) => {
-    return fetch(`${endpoint}/articles?username=${username}`).then(res => res.json())
-}
+import { getArticles } from "./libs/index.mjs"
 
 const main = async () => {
     const articles = await getArticles('jesusantguerrero')
