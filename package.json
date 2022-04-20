@@ -1,7 +1,11 @@
 {
     "name": "test-node18",
     "type": "module",
+    "engines": {
+        "node": "18.0.0"
+    },
     "scripts": {
+        "start": "node index.js",
         "test": "node ./test/getArticles.test.js"
     }
 }
