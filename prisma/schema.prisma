@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Selectors {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  cssSelector String   @db.VarChar(255)
+  url         String?
+  selector    String?
+  active      Boolean  @default(false)
+  site        Site     @relation(fields: [siteId], references: [id])
+  siteId      Int
+}
+
+model Site {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  title     String      @db.VarChar(255)
+  url       String?
+  selector  String?
+  published Boolean     @default(false)
+  Selectors Selectors[]
+}
+
+model notifications {
+  id        Int         @id @default(autoincrement())
+  entity    String      @db.VarChar(255)
+  entityId  Int        
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  handlers  Json
+  subject   String
+  message   String
+  data      Json
+  channel   String      @default("email")
+  status    String    //check (status in('scheduled', 'sent', 'failed')) default 'scheduled'
+}
