@@ -3,11 +3,14 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model Selectors {
@@ -33,7 +36,7 @@ model Site {
   Selectors Selectors[]
 }
 
-model notifications {
+model Notifications {
   id        Int         @id @default(autoincrement())
   entity    String      @db.VarChar(255)
   entityId  Int        
