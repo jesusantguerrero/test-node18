@@ -9,6 +9,7 @@ CREATE TABLE `Selectors` (
     `title` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
     `actions` JSON NOT NULL,
+    `results` JSON NOT NULL,
     `active` BOOLEAN NOT NULL DEFAULT false,
     `siteId` INTEGER NOT NULL,
 
@@ -23,6 +24,8 @@ CREATE TABLE `Site` (
     `title` VARCHAR(255) NOT NULL,
     `url` VARCHAR(191) NULL,
     `selector` VARCHAR(191) NULL,
+    `actions` JSON NOT NULL,
+    `results` JSON NOT NULL,
     `published` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
