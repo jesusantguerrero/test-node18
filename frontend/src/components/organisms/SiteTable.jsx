@@ -2,7 +2,7 @@ import { Fragment, useState } from "react"
 import { SiteItem } from "../molecules/SiteItem"
 import { SiteForm } from "./SiteForm"
 
-export const SiteTable = ({ sites, className, onSaved }) => {
+export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
     const [siteData, setSiteData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [isAdding, setIsAdding] = useState(false)
@@ -24,7 +24,7 @@ export const SiteTable = ({ sites, className, onSaved }) => {
         const formData = {
             ...siteData,
             actions: [{
-                name: siteData.action,
+                action: siteData.action,
                 value: siteData.value,
                 index: siteData.index || 0
             }]
@@ -51,7 +51,7 @@ export const SiteTable = ({ sites, className, onSaved }) => {
             </section>
             <section className="flex space-x-2">
                 <button className="rounded-md bg-gray-600 text-md px-5 py-1" onClick={(e) => toggleAdding(e)}>Add</button>
-                <button className="rounded-md bg-gray-600 text-md px-5">Check sites</button>
+                <button className="rounded-md bg-gray-600 text-md px-5" onClick={onCheck}>Check sites</button>
             </section>
         </header>
         <div className={`${className} mt-2`}>
