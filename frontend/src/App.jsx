@@ -12,6 +12,10 @@ function App() {
     setSites(sites)
   }
 
+  const handleSaved = (data) => {
+    setSites([...sites, data])
+  }
+
   useEffect(() => {
     fetchSites()
   }, [])
@@ -23,7 +27,7 @@ function App() {
         <h1 className='text-4xl text-white font-bold'> Version Checker App</h1>
       </header>
       <main className='mx-auto max-w-6xl py-5'>
-        <SiteTable className="max-w-8xl mx-auto px-5 py-2 divide-y-2 rounded-md overflow-hidden bg-gray-700" sites={sites} />
+        <SiteTable className="max-w-8xl mx-auto px-5 py-2 divide-y-2 rounded-md overflow-hidden bg-gray-700" sites={sites} onSaved={handleSaved} />
       </main>
     </div>
   )

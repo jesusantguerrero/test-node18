@@ -2,7 +2,7 @@ import { Fragment, useState } from "react"
 import { SiteItem } from "../molecules/SiteItem"
 import { SiteForm } from "./SiteForm"
 
-export const SiteTable = ({ sites, className }) => {
+export const SiteTable = ({ sites, className, onSaved }) => {
     const [siteData, setSiteData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [isAdding, setIsAdding] = useState(false)
@@ -21,20 +21,27 @@ export const SiteTable = ({ sites, className }) => {
         e.preventDefault()
         setIsLoading(true)
         console.log(siteData)
-        return
+        const formData = {
+            ...siteData,
+            actions: [{
+                name: siteData.action,
+                value: siteData.value,
+                index: siteData.index || 0
+            }]
+        }
         const endpoint = `http://localhost:5000/api/v1/sites`
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(siteData)
+            body: JSON.stringify(formData)
         })
         const data = await response.json()
         setIsLoading(false)
         setIsAdding(false)
         setSiteData({})
-        setSites([...sites, data])
+        onSaved(data)
     }
 
     return (<Fragment>

@@ -10,6 +10,7 @@ export const prisma = db;
 const app = express();
 
 app.use(cors())
+app.use(express.json())
 app.use('/api/v1/sites', SiteRouter)
 app.get('/api/v1/articles', (_req, res) => {
   res.send(getArticles())
