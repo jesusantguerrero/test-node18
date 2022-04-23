@@ -1,6 +1,6 @@
 export const siteController = (prisma) => {
 
-  const getSites =  async (prisma) => {
+  const getSites =  async () => {
       return await prisma.site.findMany()
   }
   
@@ -9,14 +9,26 @@ export const siteController = (prisma) => {
       data: {
         title: site.title,
         url: site.url,
-        selector: site.selector
+        selector: site.selector,
+        actions: site.actions
+      }
+    })
+  }
+
+  const update = async (site, result) => {
+    const { id } = site
+    return await prisma.site.update({
+      where: { id },
+      data: {
+        results: result
       }
     })
   }
 
   return {
     getSites,
-    saveSite
+    saveSite,
+    update
   }
 }
 

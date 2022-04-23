@@ -23,6 +23,7 @@ model Selectors {
   title       String
   description String?
   actions     Json     @default("{}")
+  results     Json     @default("{}")
   active      Boolean  @default(false)
   site        Site     @relation(fields: [siteId], references: [id])
   siteId      Int
@@ -35,6 +36,8 @@ model Site {
   title     String      @db.VarChar(255)
   url       String?
   selector  String?
+  actions     Json     @default("{}")
+  results     Json     @default("{}")
   published Boolean     @default(false)
   Selectors Selectors[]
 }
