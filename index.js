@@ -6,8 +6,13 @@ const main = async () => {
     const articles = await getArticles('jesusantguerrero')
     const { getSites, saveSite } = siteController(db)
     
-    saveSite()
+    await saveSite({
+        title: 'test',
+        url: 'https://nodejs.org/en/',
+        selector: '.home-downloadbutton[data-version]'
+    })
     const sites = await getSites(db)
+    console.log(sites)
 }
 
 

@@ -6,6 +6,9 @@ CREATE TABLE `Selectors` (
     `cssSelector` VARCHAR(255) NOT NULL,
     `url` VARCHAR(191) NULL,
     `selector` VARCHAR(191) NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NULL,
+    `actions` JSON NOT NULL,
     `active` BOOLEAN NOT NULL DEFAULT false,
     `siteId` INTEGER NOT NULL,
 

@@ -20,6 +20,9 @@ model Selectors {
   cssSelector String   @db.VarChar(255)
   url         String?
   selector    String?
+  title       String
+  description String?
+  actions     Json     @default("{}")
   active      Boolean  @default(false)
   site        Site     @relation(fields: [siteId], references: [id])
   siteId      Int
