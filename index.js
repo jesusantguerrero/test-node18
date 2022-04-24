@@ -1,3 +1,5 @@
+import { config } from "dotenv";
+config()
 import cors from "cors"
 import express from "express";
 import { getArticles } from "./libs/index.mjs"
@@ -6,7 +8,7 @@ import db from "./libs/db.mjs";
 import { useSocket } from "./libs/socket.mjs";
 import { dirname } from "path";
 import { fileURLToPath } from "url"
-const PORT =process.env.PORT || 3000 
+const PORT = process.env.PORT || 5000;
 
 export const prisma = db;
 
@@ -27,18 +29,18 @@ const _dirname = typeof __dirname !== 'undefined'
   ? __dirname
   : dirname(fileURLToPath(import.meta.url))
 
-app.use((req, res, next) => {
-    if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
-        next();
-    } else {
-        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-        res.header('Expires', '-1');
-        res.header('Pragma', 'no-cache');
-        res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
-    }
-});
 app.use(express.static(`${_dirname}/frontend/dist`))
 
+app.use((req, res, next) => {
+  if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+      next();
+  } else {
+      res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+      res.header('Expires', '-1');
+      res.header('Pragma', 'no-cache');
+      res.sendFile(path.join(_dirname, 'frontend/dist', 'index.html'));
+  }
+});
 
 const { getServer } = useSocket(app)
 const server = getServer()
