@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import  Socket from "socket.io-client"
 import logo from './logo.svg'
 import { SiteTable } from './components/organisms/SiteTable'
 import './App.css'
 const ENDPOINT = 'http://localhost:5000/api/v1'
+
 
 function App() {
   const [sites, setSites] = useState([])
@@ -23,8 +25,19 @@ function App() {
     setSites([...sites, data])
   }
 
+  const addListeners = () => {
+    const socket = Socket('ws://localhost:5000');
+    console.log('here')
+    socket.on('check-completed', () => {
+      console.log('completed')
+      fetchSites()
+    })
+    socket.emit('connection', 'hello world' )
+  }
+
   useEffect(() => {
     fetchSites()
+    addListeners()
   }, [])
 
   return (

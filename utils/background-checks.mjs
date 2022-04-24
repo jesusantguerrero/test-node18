@@ -4,18 +4,20 @@ import db from "../libs/db.mjs"
 const { getSites, update } = siteController(db);
 import Cheerio from 'cheerio';
 
-export const runBackground = (sync = false) => {
-    return getSites().then(sites => {
+export const runBackground = async (sync = false, socket) => {
+    try {
+        const sites = await getSites();
         if (sync) {
             for (const site of sites) {
-                updateCall(site);
+                await updateCall(site);
             }
+            socket && socket.emit('check-completed', sites);
         } else {
             sites.forEach(updateCall);
         }
-    }).catch(error => {
-        console.log(error)
-    });
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const updateCall = async (site) => {

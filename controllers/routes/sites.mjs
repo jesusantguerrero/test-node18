@@ -2,6 +2,7 @@ import express from "express";
 import { siteController } from "../sites.mjs";
 import prisma from "../../libs/db.mjs";
 import { runBackground } from "../../utils/background-checks.mjs";
+import { useSocket } from "../../libs/socket.mjs";
 
 const SiteRouter = express.Router();
 const { getSites, saveSite } = siteController(prisma)
@@ -17,7 +18,8 @@ SiteRouter.post('/', async (req, res) => {
 })
 
 SiteRouter.post('/check', async (req, res) => {
-    await runBackground(true)
+    const { getInstance } = useSocket()
+    await runBackground(true, getInstance())
     const sites = await getSites()
     res.json(sites)
 })
