@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react"
+import config from "../../config"
 import { SiteItem } from "../molecules/SiteItem"
 import { SiteForm } from "./SiteForm"
 
@@ -29,7 +30,7 @@ export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
                 index: siteData.index || 0
             }]
         }
-        const endpoint = `http://localhost:5000/api/v1/sites`
+        const endpoint = `${config.apiV1}/sites`
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {

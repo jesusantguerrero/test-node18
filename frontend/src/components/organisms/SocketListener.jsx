@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import  Socket from "socket.io-client"
-const ENDPOINT = 'http://localhost:5000/api/v1'
+import config from '../../config';
 
 
 export function SocketListener() {
 
   const addListeners = () => {
-    const socket = Socket('ws://localhost:5000');
+    const socket = Socket(config.socketEndpoint);
     socket.on('check-completed', () => {
       console.log('completed')
       fetchSites()

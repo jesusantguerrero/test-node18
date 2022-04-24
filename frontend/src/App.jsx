@@ -3,14 +3,14 @@ import logo from './logo.svg'
 import { SiteTable } from './components/organisms/SiteTable'
 import './App.css'
 import { SocketListener } from './components/organisms/SocketListener'
-const ENDPOINT = 'http://localhost:5000/api/v1'
+import config from './config'
 
 
 function App() {
   const [sites, setSites] = useState([])
 
   const fetchSites = async() => {
-    const sites = await fetch(`${ENDPOINT}/sites`).then(res => res.json())
+    const sites = await fetch(`${config.apiV1}/sites`).then(res => res.json())
     setSites(sites)
   }
 
