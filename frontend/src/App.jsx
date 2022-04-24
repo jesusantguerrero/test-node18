@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import  Socket from "socket.io-client"
 import logo from './logo.svg'
 import { SiteTable } from './components/organisms/SiteTable'
 import './App.css'
+import { SocketListener } from './components/organisms/SocketListener'
 const ENDPOINT = 'http://localhost:5000/api/v1'
 
 
@@ -25,20 +25,10 @@ function App() {
     setSites([...sites, data])
   }
 
-  const addListeners = () => {
-    const socket = Socket('ws://localhost:5000');
-    console.log('here')
-    socket.on('check-completed', () => {
-      console.log('completed')
-      fetchSites()
-    })
-    socket.emit('connection', 'hello world' )
-  }
-
   useEffect(() => {
     fetchSites()
-    addListeners()
   }, [])
+  
 
   return (
     <div className="App bg-gray-800 h-screen text-white">
@@ -49,6 +39,7 @@ function App() {
       <main className='mx-auto max-w-6xl py-5'>
         <SiteTable className="max-w-8xl mx-auto px-5 py-2 divide-y-2 rounded-md overflow-hidden bg-gray-700" sites={sites} onSaved={handleSaved} onCheck={onCheck} />
       </main>
+      <SocketListener />
     </div>
   )
 }
