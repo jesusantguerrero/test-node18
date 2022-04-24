@@ -4,6 +4,8 @@ import { getArticles } from "./libs/index.mjs"
 import { SiteRouter } from "./controllers/routes/index.mjs"
 import db from "./libs/db.mjs";
 import { useSocket } from "./libs/socket.mjs";
+import { dirname } from "path";
+import { fileURLToPath } from "url"
 const PORT =process.env.PORT || 3000 
 
 export const prisma = db;
@@ -20,6 +22,23 @@ app.get('/api/v1/articles', (_req, res) => {
 app.get('/api/v1', (_req, res) => {
   res.send('Checker v1!')
 })
+
+const _dirname = typeof __dirname !== 'undefined'
+  ? __dirname
+  : dirname(fileURLToPath(import.meta.url))
+
+app.use((req, res, next) => {
+    if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+        next();
+    } else {
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+        res.header('Expires', '-1');
+        res.header('Pragma', 'no-cache');
+        res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+    }
+});
+app.use(express.static(`${_dirname}/frontend/dist`))
+
 
 const { getServer } = useSocket(app)
 const server = getServer()

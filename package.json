@@ -5,10 +5,11 @@
         "node": "18.0.0"
     },
     "scripts": {
-        "start": "node index.js",
         "dev": "npx nodemon index.js",
         "test": "node ./test/getArticles.test.js",
-        "db:studio": "npx prisma studio"
+        "db:studio": "npx prisma studio",
+        "build": "cd frontend && npm run build",
+        "start": "npm run build && node index.js"
     },
     "dependencies": {
         "@prisma/client": "^3.12.0",
