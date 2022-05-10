@@ -1,3 +1,4 @@
+import { useReducer } from "react"
 import { Fragment, useState } from "react"
 import config from "../../config"
 import { SiteItem } from "../molecules/SiteItem"
@@ -6,11 +7,28 @@ import { SiteForm } from "./SiteForm"
 export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
     const [siteData, setSiteData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-    const [isAdding, setIsAdding] = useState(false)
+    const [isAdding, dispatch] = useReducer((state, action) => {
+        switch (action) {
+            case "toggle":
+                return !state
+            case "activate":
+                return true
+            case "deactivate":
+                return false
+            default:
+                return state
+            
+        }
+    }, false)
 
     const toggleAdding = (e) => {
         e.preventDefault()
-        setIsAdding(!isAdding)
+        dispatch("toggle")
+    }
+
+    const handleEdit = (site) => {
+        setSiteData(site)
+        dispatch("activate")
     }
 
     const onChange = (e) => {
@@ -21,7 +39,6 @@ export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
     const onSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
-        console.log(siteData)
         const formData = {
             ...siteData,
             actions: [{
@@ -30,9 +47,14 @@ export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
                 index: siteData.index || 0
             }]
         }
-        const endpoint = `${config.apiV1}/sites`
+        let endpoint = `${config.apiV1}/sites`
+        let method = "POST"
+        if (siteData.id) {
+            endpoint = `${config.apiV1}/sites/${siteData.id}`
+            method = "PUT"
+        }
         const response = await fetch(endpoint, {
-            method: "POST",
+            method,
             headers: {
                 "Content-Type": "application/json"
             },
@@ -40,7 +62,7 @@ export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
         })
         const data = await response.json()
         setIsLoading(false)
-        setIsAdding(false)
+        dispatch("deactivate")
         setSiteData({})
         onSaved(data)
     }
@@ -48,16 +70,23 @@ export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
     return (<Fragment>
         <header className="flex justify-between">
             <section>
-                <h4 className="text-2x font-bold"> Sites</h4>
+                <h4 className="font-bold text-2x"> Sites</h4>
             </section>
             <section className="flex space-x-2">
-                <button className="rounded-md bg-gray-600 text-md px-5 py-1" onClick={(e) => toggleAdding(e)}>Add</button>
-                <button className="rounded-md bg-gray-600 text-md px-5" onClick={onCheck}>Check sites</button>
+                <button className="px-5 py-1 bg-gray-600 rounded-md text-md" onClick={(e) => toggleAdding(e)}>Add</button>
+                <button className="px-5 bg-gray-600 rounded-md text-md" onClick={onCheck}>Check sites</button>
             </section>
         </header>
         <div className={`${className} mt-2`}>
-            { isAdding && <SiteForm onSubmit={onSubmit} onChange={onChange} site={siteData} /> }
-            { sites.map(site => <SiteItem key={site.id} site={site} />)}
+            { isAdding && <SiteForm 
+                    site={siteData} 
+                    isLoading={isLoading}
+                    onSubmit={onSubmit} 
+                    onChange={onChange} 
+                    onCancel={toggleAdding} 
+                /> 
+            }
+            { sites.map(site => <SiteItem key={site.id} site={site} onEdit={handleEdit} />)}
         </div>
     </Fragment>
     )
