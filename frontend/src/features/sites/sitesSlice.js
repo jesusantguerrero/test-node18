@@ -19,10 +19,16 @@ export const siteSlice = createApi({
                     method: 'PATCH',
                     body: patch
                 })
-            })
+            }),
+            runCheck: builder.mutation({
+                query: () => ({
+                    url: `/sites/check`,
+                    method: 'POST'
+                })
+            }),
         }
     }
 })
 
-export const { useFetchSitesQuery, useUpdateSiteMutation } = siteSlice;
+export const { useFetchSitesQuery, useUpdateSiteMutation, useRunCheckMutation } = siteSlice;
 
