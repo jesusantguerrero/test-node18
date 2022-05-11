@@ -28,9 +28,8 @@ const updateCall = async (site) => {
         results = [`Error: ${error.message}` ]
     });
     
-    if (results.length > 0) {
+    if (results.length > 0 && site.results !== results) {
         await update(site, results);
-        console.log('saved', site.title, results)
     }
 }
 
