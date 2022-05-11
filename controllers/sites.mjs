@@ -15,12 +15,11 @@ export const siteController = (prisma) => {
     })
   }
 
-  const update = async (site, result) => {
-    const { id } = site
+  const update = async (id, site) => {
     return await prisma.site.update({
-      where: { id },
+      where: { id: Number(id) },
       data: {
-        results: result
+        ...site
       }
     })
   }

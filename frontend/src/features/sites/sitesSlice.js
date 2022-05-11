@@ -12,10 +12,17 @@ export const siteSlice = createApi({
         return {
             fetchSites: builder.query({
                 query: () => `/sites`
+            }),
+            updateSite: builder.mutation({
+                query: (id, ...patch) => ({
+                    url: `/sites/${id}`,
+                    method: 'PATCH',
+                    body: patch
+                })
             })
         }
     }
 })
 
-export const { useFetchSitesQuery } = siteSlice;
+export const { useFetchSitesQuery, useUpdateSiteMutation } = siteSlice;
 
