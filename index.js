@@ -8,6 +8,7 @@ import db from "./libs/db.mjs";
 import { useSocket } from "./libs/socket.mjs";
 import { dirname } from "path";
 import { fileURLToPath } from "url"
+import { CompilerRouter } from "./controllers/routes/compiler.mjs";
 const PORT = process.env.PORT || 5000;
 
 export const prisma = db;
@@ -17,6 +18,7 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 app.use('/api/v1/sites', SiteRouter)
+app.use('/api/v1/compile', CompilerRouter)
 app.get('/api/v1/articles', (_req, res) => {
   res.send(getArticles())
 })
@@ -24,6 +26,7 @@ app.get('/api/v1/articles', (_req, res) => {
 app.get('/api/v1', (_req, res) => {
   res.send('Checker v1!')
 })
+
 
 const _dirname = typeof __dirname !== 'undefined'
   ? __dirname
