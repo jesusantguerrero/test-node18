@@ -2,13 +2,14 @@ import logo from './logo.svg'
 import { SiteTable } from './components/organisms/SiteTable'
 import './App.css'
 import { SocketListener } from './components/organisms/SocketListener'
-import { useFetchSitesQuery, useRunCheckMutation, useUpdateSiteMutation } from './features/sites/sitesSlice'
+import { useFetchSitesQuery, useRunCheckMutation, useUpdateSiteMutation, useDeleteSiteMutation } from './features/sites/sitesSlice'
 
 
 function App() {
   const { data = [], refetch } = useFetchSitesQuery();
   const [ updateSite, { isLoading: isUpdating } ] = useUpdateSiteMutation();
   const [ runCheck, { isLoading: isChecking } ] = useRunCheckMutation();
+  const [ deleteSite] = useDeleteSiteMutation();
 
   const handleSaved = async (data) => {
     await updateSite(data.id, data)
@@ -27,6 +28,7 @@ function App() {
           sites={data} 
           onSaved={handleSaved} 
           onCheck={() => runCheck()}
+          onDeleteItem={deleteSite}
           isUpdating={isUpdating} 
         />
       </main>

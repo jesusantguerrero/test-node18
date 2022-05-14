@@ -20,6 +20,12 @@ export const siteSlice = createApi({
                     body: patch
                 })
             }),
+            deleteSite: builder.mutation({
+                query: (id) => ({
+                    url: `/sites/${id}`,
+                    method: 'DELETE'
+                })
+            }),
             runCheck: builder.mutation({
                 query: () => ({
                     url: `/sites/check`,
@@ -30,5 +36,5 @@ export const siteSlice = createApi({
     }
 })
 
-export const { useFetchSitesQuery, useUpdateSiteMutation, useRunCheckMutation } = siteSlice;
+export const { useFetchSitesQuery, useUpdateSiteMutation, useRunCheckMutation, useDeleteSiteMutation } = siteSlice;
 

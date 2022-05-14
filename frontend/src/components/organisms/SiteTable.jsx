@@ -4,7 +4,7 @@ import config from "../../config"
 import { SiteItem } from "../molecules/SiteItem"
 import { SiteForm } from "./SiteForm"
 
-export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
+export const SiteTable = ({ sites, className, onSaved, onCheck, onDeleteItem }) => {
     const [siteData, setSiteData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [isAdding, dispatch] = useReducer((state, action) => {
@@ -86,7 +86,7 @@ export const SiteTable = ({ sites, className, onSaved, onCheck }) => {
                     onCancel={toggleAdding} 
                 /> 
             }
-            { sites.map(site => <SiteItem key={site.id} site={site} onEdit={handleEdit} />)}
+            { sites.map(site => <SiteItem key={site.id} site={site} onEdit={handleEdit} onDelete={onDeleteItem} />)}
         </div>
     </Fragment>
     )

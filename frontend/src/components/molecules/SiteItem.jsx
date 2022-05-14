@@ -1,6 +1,6 @@
 import { format } from "date-fns"
 
-export const SiteItem = ({ site, key, onEdit }) => {
+export const SiteItem = ({ site, key, onEdit, onDelete }) => {
     const formatDate = (value) => {
         const date = new Date(value)
         return format(date, "dd MMM, yyyy")
@@ -15,8 +15,11 @@ export const SiteItem = ({ site, key, onEdit }) => {
             }
             <span className="w-full text-sm text-left">At {formatDate(site.updatedAt)}</span>
         </div>
-        <div className="flex items-center px-5">
+        <div className="flex flex-col items-end px-5 ml-auto space-y-2 md:flex-row md:items-center md:space-x-2">
             <button onClick={() => onEdit(site)} className="px-2 py-1 bg-gray-600 rounded-md">Edit</button>
+            <button onClick={() => onDelete(site.id)} className="px-2 py-1 bg-red-600 rounded-md">
+                Delete
+            </button>
         </div>
     </div>
 }

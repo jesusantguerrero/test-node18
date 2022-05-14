@@ -24,10 +24,17 @@ export const siteController = (prisma) => {
     })
   }
 
+  const remove = async (id) => {
+    return await prisma.site.delete({
+      where: { id: Number(id) }
+    })
+  }
+
   return {
     getSites,
     saveSite,
-    update
+    update,
+    remove
   }
 }
 
