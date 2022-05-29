@@ -1,0 +1,13 @@
+.siteTable {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: red;
+    padding: 0 10px;
+    border-radius: 5px;
+}
