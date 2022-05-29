@@ -20,6 +20,9 @@ SiteRouter.post('/', async (req, res) => {
 SiteRouter.patch('/:id', async (req, res) => {
     const { id } = req.params
     const body = req.body
+    delete body.results
+    delete body.action
+    delete body.value
     const site = await update(id, body)
    return res.json(site)
 })
@@ -33,6 +36,10 @@ SiteRouter.delete('/:id', async (req, res) => {
 SiteRouter.put('/:id', async (req, res) => {
     const { id } = req.params
     const body = req.body
+    delete body.results
+    delete body.action
+    delete body.value
+    delete body.index
     const site = await update(id, body)
     return res.json(site)
 })
@@ -40,6 +47,13 @@ SiteRouter.put('/:id', async (req, res) => {
 SiteRouter.post('/check', async (req, res) => {
     const { getInstance } = useSocket()
     await runBackground(true, getInstance())
+    const sites = await getSites()
+    res.json(sites)
+})
+
+SiteRouter.get('/check', async (req, res) => {
+    const { getInstance } = useSocket()
+    await runBackground(false, getInstance())
     const sites = await getSites()
     res.json(sites)
 })

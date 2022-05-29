@@ -16,6 +16,7 @@ export const siteController = (prisma) => {
   }
 
   const update = async (id, site) => {
+    delete site.id
     return await prisma.site.update({
       where: { id: Number(id) },
       data: {

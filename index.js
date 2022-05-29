@@ -6,7 +6,7 @@ import { getArticles } from "./libs/index.mjs"
 import { SiteRouter } from "./controllers/routes/index.mjs"
 import db from "./libs/db.mjs";
 import { useSocket } from "./libs/socket.mjs";
-import { dirname } from "path";
+import { dirname, join } from "path";
 import { fileURLToPath } from "url"
 import { CompilerRouter } from "./controllers/routes/compiler.mjs";
 const PORT = process.env.PORT || 5000;
@@ -32,7 +32,7 @@ const _dirname = typeof __dirname !== 'undefined'
   ? __dirname
   : dirname(fileURLToPath(import.meta.url))
 
-app.use(express.static(`${_dirname}/frontend/dist`))
+app.use(express.static(`${_dirname}/packages/frontend/dist`))
 
 app.use((req, res, next) => {
   if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
       res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
       res.header('Expires', '-1');
       res.header('Pragma', 'no-cache');
-      res.sendFile(path.join(_dirname, 'frontend/dist', 'index.html'));
+      res.sendFile(join(_dirname, '/packages/frontend/dist', 'index.html'));
   }
 });
 

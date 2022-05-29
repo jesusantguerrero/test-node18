@@ -27,7 +27,12 @@ export const SiteTable = ({ sites, className, onSaved, onCheck, onDeleteItem }) 
     }
 
     const handleEdit = (site) => {
-        setSiteData(site)
+        setSiteData({
+            ...site,
+            value: site.actions.length &&  site.actions[0].value,
+            action: site.actions.length && site.actions[0].action,
+            index: site.actions.length && site.actions[0].index
+        })
         dispatch("activate")
     }
 
