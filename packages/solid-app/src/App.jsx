@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import styles from './App.module.css';
 import SiteTable from './components/SiteTable';
-import { createResource, Suspense } from "solid-js"
+import { createResource } from "solid-js"
 import { fetchSites } from './features/sites';
 function App() {
   const [sites] = createResource(fetchSites)
@@ -12,9 +12,7 @@ function App() {
         <img src={logo} class={styles.logo} alt="logo" />
         <h1>Version Checker App</h1>
       </header>
-      <Suspense fallback={<div>Loading...</div>}>
-        <SiteTable sites={sites} />
-      </Suspense>
+      <SiteTable sites={sites} />
     </div>
   );
 }
