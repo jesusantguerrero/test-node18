@@ -36,5 +36,23 @@ export const siteSlice = createApi({
     }
 })
 
-export const { useFetchSitesQuery, useUpdateSiteMutation, useRunCheckMutation, useDeleteSiteMutation } = siteSlice;
+const initialState = {
+    sites: []
+};
 
+const { actions, reducer } = createSlice({
+    name: 'checks',
+    initialState,
+    reducers: {
+        setSites(state, { payload }) {
+            state.sites = payload;
+        },
+        executeCheck(state, { payload }) {
+            state.sites = payload;
+        }
+    }
+})
+
+export const { setSites, executeCheck } = actions;
+export const { useFetchSitesQuery, useUpdateSiteMutation, useRunCheckMutation, useDeleteSiteMutation } = siteSlice;
+export { reducer }

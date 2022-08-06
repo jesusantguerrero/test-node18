@@ -1,20 +1,29 @@
 import logo from './logo.svg'
-import { SiteTable } from './components/organisms/SiteTable'
+import { SiteTable } from './components/SiteTable'
 import './App.css'
-import { SocketListener } from './components/organisms/SocketListener'
-import { useFetchSitesQuery, useRunCheckMutation, useUpdateSiteMutation, useDeleteSiteMutation } from './features/sites/sitesSlice'
+import { SocketListener } from './components/SocketListener'
+import { useFetchSitesQuery, useUpdateSiteMutation, useDeleteSiteMutation, executeCheck } from './features/sites/sitesSlice'
+import { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+const sites = useSelector()
 
 
 function App() {
+  const dispatch = useDispatch();
   const { data = [], refetch } = useFetchSitesQuery();
   const [ updateSite, { isLoading: isUpdating } ] = useUpdateSiteMutation();
-  const [ runCheck, { isLoading: isChecking } ] = useRunCheckMutation();
+  // const [ runCheck, { isLoading: isChecking } ] = useRunCheckMutation();
   const [ deleteSite] = useDeleteSiteMutation();
 
   const handleSaved = async (data) => {
     await updateSite(data.id, data)
     refetch()
   }
+
+  const handleRunCheck = useCallback(() => {
+    dispatch(executeCheck())
+  }, [dispatch])
   
   return (
     <div className="h-screen text-white bg-gray-800 App">
@@ -27,7 +36,7 @@ function App() {
           className="px-5 py-2 mx-auto overflow-hidden bg-gray-700 divide-y-2 rounded-md max-w-8xl" 
           sites={data} 
           onSaved={handleSaved} 
-          onCheck={() => runCheck()}
+          onCheck={() => handleRunCheck()}
           onDeleteItem={deleteSite}
           isUpdating={isUpdating} 
         />

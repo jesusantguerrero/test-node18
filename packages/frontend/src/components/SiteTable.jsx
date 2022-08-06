@@ -1,7 +1,7 @@
 import { useReducer } from "react"
 import { Fragment, useState } from "react"
-import config from "../../config"
-import { SiteItem } from "../molecules/SiteItem"
+import config from "../config"
+import { SiteTableItem } from "./SiteTableItem"
 import { SiteForm } from "./SiteForm"
 
 export const SiteTable = ({ sites, className, onSaved, onCheck, onDeleteItem }) => {
@@ -23,6 +23,7 @@ export const SiteTable = ({ sites, className, onSaved, onCheck, onDeleteItem }) 
 
     const toggleAdding = (e) => {
         e.preventDefault()
+        if (isAdding) setSiteData({})
         dispatch("toggle")
     }
 
@@ -91,7 +92,7 @@ export const SiteTable = ({ sites, className, onSaved, onCheck, onDeleteItem }) 
                     onCancel={toggleAdding} 
                 /> 
             }
-            { sites.map(site => <SiteItem key={site.id} site={site} onEdit={handleEdit} onDelete={onDeleteItem} />)}
+            { sites.map(site => <SiteTableItem key={site.id} site={site} onEdit={handleEdit} onDelete={onDeleteItem} />)}
         </div>
     </Fragment>
     )

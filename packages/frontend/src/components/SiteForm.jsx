@@ -3,7 +3,7 @@ export const SiteForm = ({ onSubmit, onChange, onCancel, site }) => {
  return (
     <form onSubmit={onSubmit} className="justify-between px-5 py-5 space-x-2 bg-gray-800">
         <div className="flex w-full space-x-2 text-left">
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
                 <label htmlFor="title" className="px-5 text-xl">Title</label>
                 <input
                     type="text"
@@ -14,7 +14,7 @@ export const SiteForm = ({ onSubmit, onChange, onCancel, site }) => {
                     onChange={onChange}
                 />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
                 <label htmlFor="url" className="px-5 text-xl">URL</label>
                 <input
                     type="text"
@@ -25,20 +25,27 @@ export const SiteForm = ({ onSubmit, onChange, onCancel, site }) => {
                     onChange={onChange}
                 />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
                 <label htmlFor="selector" className="px-5 text-xl">Selector</label>
-                <div className="flex">
-                    <input
-                        type="text"
-                        name="selector"
-                        id="selector"
-                        className="w-full px-5 py-2 text-white bg-gray-700 rounded-md"
-                        value={site.selector}
-                        onChange={onChange}
-                    />
+                <div className="flex space-x-2" value={site.selectorTemplate} onChange={onChange}>
+                    <select  name="selectorTemplate"
+                            id="selectorTemplate" className="w-full px-5 py-2 text-white bg-gray-700 rounded-md">
+                        <option value="github">Github</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    { site.selectorTemplate !== "github" && 
+                        <input
+                            type="text"
+                            name="selector"
+                            id="selector"
+                            className="w-full px-5 py-2 text-white bg-gray-700 rounded-md"
+                            value={site.selector}
+                            onChange={onChange}
+                        />
+                    }
                 </div>
             </div>
-            <div className="flex flex-col">
+            { site.selectorTemplate !== "github" && <div className="flex flex-col w-full">
                 <label htmlFor="version" className="px-5 text-xl">Action</label>
                 <div className="flex space-x-2">
                     <input
@@ -69,7 +76,7 @@ export const SiteForm = ({ onSubmit, onChange, onCancel, site }) => {
                         onChange={onChange}
                     />
                 </div>
-            </div>
+            </div> }
         </div>
         <div className="flex justify-end mt-5 space-x-3">
             <button 

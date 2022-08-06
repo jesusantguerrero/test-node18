@@ -1,12 +1,12 @@
 import { format } from "date-fns"
 
-export const SiteItem = ({ site, key, onEdit, onDelete }) => {
+export const SiteTableItem = ({ site, onEdit, onDelete, ...props }) => {
     const formatDate = (value) => {
         const date = new Date(value)
         return format(date, "dd MMM, yyyy")
     }
 
-    return <div className="flex justify-between w-full px-5 py-2 bg-gray-700" key={key}>
+    return <div className="flex justify-between w-full px-5 py-2 bg-gray-700">
         <h4 className="w-full text-xl text-left uppercase">{site.title}</h4>
         <div className="w-full"> <a href={site.url} className="underline">{site.url}</a></div>
         <div className="flex items-center justify-end w-full space-x-2 text-right">

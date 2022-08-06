@@ -1,20 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import SiteForm from "../components/organisms/SiteForm";
+import { beforeEach, describe } from "vitest";
+import SiteForm from "../components/SiteForm.jsx";
 
-test('Load and display site form', () => {
-    const site = {
-        
-    }
+describe('Site Form', () => {
+    
+    beforeEach(() => {
+        const site = {}
+        const handleChange = jest.fn();
+        const handleSubmit = jest.fn();
+        render(<SiteForm onSubmit={handleSubmit} onChange={handleChange} site={site} />); 
+    })
 
-    const handleChange = jest.fn();
-    const handleSubmit = jest.fn();
-
-    render(<SiteForm  onSubmit={handleSubmit} onChange={handleChange} site={site} />);
-    screen.getByText('Title')
-    screen.getByText('URL')
-    screen.getByText('Selector')
-    screen.getByText('Selector')
-    screen.getByText('Action')
-    screen.getByText('Value')
-    screen.getByText('Index')
+    test('Load and display site form', () => {
+        screen.getByText('Sites')
+    })
 })

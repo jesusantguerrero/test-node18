@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import  Socket from "socket.io-client"
-import config from '../../config';
+import config from '../config';
 
 
 export function SocketListener() {

@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { incremented, amountAdded } from "../../features/counters/counterSlice"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { incremented, amountAdded } from "../features/counters/counterSlice"
 export const Counter = () => {
     const count = useAppSelector(state => state.counter.value)
     const dispatch = useAppDispatch()
