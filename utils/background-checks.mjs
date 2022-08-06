@@ -3,6 +3,7 @@ import  { siteController } from "./../controllers/sites.mjs";
 import db from "../libs/db.mjs"
 const { getSites, update } = siteController(db);
 import Cheerio from 'cheerio';
+import { getSelectors } from "./constants.js";
 
 export const runBackground = async (sync = false, socket) => {
     try {
@@ -23,19 +24,19 @@ export const runBackground = async (sync = false, socket) => {
 const updateCall = async (site) => {
     let results = []
     await axios.get(site.url).then(({ data }) => {
-        results = site.actions ? processData(data, site.selector, site.actions) : [];
+        results = site.actions ? processData(data, getSelectors(site)) : [];
     }).catch(error => {
         results = [`Error: ${error.message}` ]
     });
 
-    
     if (results.length > 0 && site.results !== results) {
         await update(site.id, { results: results });
     }
 }
 
-export const processData = (data, selector, actions) => {
+export const processData = (data, selectorInstance) => {
     const $ = Cheerio.load(data);
+    const { selector, actions } = selectorInstance
     const $selector = $(selector);
     let { index } = actions[0]
     index = index <= 0 ? 1 : index;
