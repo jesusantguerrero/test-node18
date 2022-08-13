@@ -4,10 +4,7 @@ import './App.css'
 import { SocketListener } from './components/SocketListener'
 import { useFetchSitesQuery, useUpdateSiteMutation, useDeleteSiteMutation, executeCheck } from './features/sites/sitesSlice'
 import { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-const sites = useSelector()
-
+import { useDispatch  } from 'react-redux'
 
 function App() {
   const dispatch = useDispatch();
