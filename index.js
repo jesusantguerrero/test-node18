@@ -3,12 +3,11 @@ config()
 import cors from "cors"
 import express from "express";
 import { getArticles } from "./libs/index.mjs"
-import { SiteRouter } from "./controllers/routes/index.mjs"
+import { SiteRouter, CompilerRouter } from "./routes/index.mjs"
 import db from "./libs/db.mjs";
 import { useSocket } from "./libs/socket.mjs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url"
-import { CompilerRouter } from "./controllers/routes/compiler.mjs";
 const PORT = process.env.PORT || 5000;
 
 export const prisma = db;

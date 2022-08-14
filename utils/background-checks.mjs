@@ -1,8 +1,8 @@
 import axios from "axios";
-import  { siteController } from "./../controllers/sites.mjs";
+import Cheerio from 'cheerio';
+import  { siteController } from "../app/controllers/sites.mjs";
 import db from "../libs/db.mjs"
 const { getSites, update } = siteController(db);
-import Cheerio from 'cheerio';
 import { getSelectors } from "./constants.js";
 
 export const runBackground = async (sync = false, socket) => {
