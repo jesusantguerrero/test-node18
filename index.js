@@ -3,7 +3,7 @@ config()
 import cors from "cors"
 import express from "express";
 import { getArticles } from "./libs/index.mjs"
-import { SiteRouter, CompilerRouter } from "./routes/index.mjs"
+import { SiteRouter, CompilerRouter, ProductRouter } from "./routes/index.mjs"
 import db from "./libs/db.mjs";
 import { useSocket } from "./libs/socket.mjs";
 import { dirname, join } from "path";
@@ -18,6 +18,7 @@ app.use(cors())
 app.use(express.json())
 app.use('/api/v1/sites', SiteRouter)
 app.use('/api/v1/compile', CompilerRouter)
+app.use('/api/v1/products', ProductRouter)
 app.get('/api/v1/articles', (_req, res) => {
   res.send(getArticles())
 })

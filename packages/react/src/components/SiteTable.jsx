@@ -4,7 +4,7 @@ import config from "../config"
 import { SiteTableItem } from "./SiteTableItem"
 import { SiteForm } from "./SiteForm"
 
-export const SiteTable = ({ sites, className, onSaved, onCheck, onDeleteItem }) => {
+export const SiteTable = ({ sites, className, isChecking, onSaved, onCheck, onDeleteItem }) => {
     const [siteData, setSiteData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [isAdding, dispatch] = useReducer((state, action) => {
@@ -80,7 +80,10 @@ export const SiteTable = ({ sites, className, onSaved, onCheck, onDeleteItem }) 
             </section>
             <section className="flex space-x-2">
                 <button className="px-5 py-1 bg-gray-600 rounded-md text-md" onClick={(e) => toggleAdding(e)}>Add</button>
-                <button className="px-5 bg-gray-600 rounded-md text-md" onClick={onCheck}>Check sites</button>
+                <button className="px-5 bg-gray-600 rounded-md text-md" onClick={onCheck} disabled={isChecking}>
+                    Check sites
+                    { isChecking && '...' }
+                </button>
             </section>
         </header>
         <div className={`${className} mt-2`}>

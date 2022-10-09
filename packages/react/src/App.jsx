@@ -2,7 +2,7 @@ import logo from './logo.svg'
 import { SiteTable } from './components/SiteTable'
 import './App.css'
 import { SocketListener } from './components/SocketListener'
-import { useFetchSitesQuery, useUpdateSiteMutation, useDeleteSiteMutation, executeCheck } from './features/sites/sitesSlice'
+import { useFetchSitesQuery, useUpdateSiteMutation, useDeleteSiteMutation, useRunCheckMutation } from './features/sites/sitesSlice'
 import { useCallback } from 'react'
 import { useDispatch  } from 'react-redux'
 
@@ -10,17 +10,13 @@ function App() {
   const dispatch = useDispatch();
   const { data = [], refetch } = useFetchSitesQuery();
   const [ updateSite, { isLoading: isUpdating } ] = useUpdateSiteMutation();
-  // const [ runCheck, { isLoading: isChecking } ] = useRunCheckMutation();
+  const [ runCheck, { isLoading: isChecking } ] = useRunCheckMutation();
   const [ deleteSite] = useDeleteSiteMutation();
 
   const handleSaved = async (data) => {
     await updateSite(data.id, data)
     refetch()
   }
-
-  const handleRunCheck = useCallback(() => {
-    dispatch(executeCheck())
-  }, [dispatch])
   
   return (
     <div className="h-screen text-white bg-gray-800 App">
@@ -32,8 +28,9 @@ function App() {
         <SiteTable 
           className="px-5 py-2 mx-auto overflow-hidden bg-gray-700 divide-y-2 rounded-md max-w-8xl" 
           sites={data} 
-          onSaved={handleSaved} 
-          onCheck={() => handleRunCheck()}
+          onSaved={handleSaved}
+          isChecking={isChecking} 
+          onCheck={() => runCheck()}
           onDeleteItem={deleteSite}
           isUpdating={isUpdating} 
         />
