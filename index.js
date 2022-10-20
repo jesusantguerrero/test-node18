@@ -2,10 +2,10 @@ import { config } from "dotenv";
 config()
 import cors from "cors"
 import express from "express";
-import { getArticles } from "./libs/index.mjs"
-import { SiteRouter, CompilerRouter, ProductRouter } from "./routes/index.mjs"
-import db from "./libs/db.mjs";
-import { useSocket } from "./libs/socket.mjs";
+import { getArticles } from "./server/libs/index.mjs"
+import { SiteRouter, CompilerRouter, ProductRouter } from "./server/routes/index.mjs"
+import db from "./server/libs/db.mjs";
+import { useSocket } from "./server/libs/socket.mjs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url"
 const PORT = process.env.PORT || 5000;

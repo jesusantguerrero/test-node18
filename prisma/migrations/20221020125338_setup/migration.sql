@@ -1,28 +1,11 @@
 -- CreateTable
-CREATE TABLE `Selectors` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
-    `cssSelector` VARCHAR(255) NOT NULL,
-    `url` VARCHAR(191) NULL,
-    `selector` VARCHAR(191) NULL,
-    `title` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NULL,
-    `actions` JSON NOT NULL,
-    `results` JSON NOT NULL,
-    `active` BOOLEAN NOT NULL DEFAULT false,
-    `siteId` INTEGER NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `Site` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `title` VARCHAR(255) NOT NULL,
     `url` VARCHAR(191) NULL,
+    `selectorTemplate` VARCHAR(191) NOT NULL DEFAULT 'custom',
     `selector` VARCHAR(191) NULL,
     `actions` JSON NOT NULL,
     `results` JSON NOT NULL,

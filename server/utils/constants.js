@@ -2,7 +2,7 @@ export const selectorTemplate = {
     github: {
         replaceable: 'https://github.com',
         getSelector(url) {
-            return url.replace(this.replaceable, '') + '/releases'
+            return `a[href*="${url.replace(this.replaceable, '')}/releases/tag"]`
         },
         getAction() {
             return ['text']
@@ -12,12 +12,12 @@ export const selectorTemplate = {
 
 
 export const getSelectors = (site) => {
-    const page = Object.values(value).find(() => {
-        return site.url.includes(value.replaceable)
+    const page = Object.values(selectorTemplate).find((template) => {
+        return site.url.includes(template.replaceable)
     })
 
     return {
-        selector: site.selector || page.getSelector(),
+        selector: site.selector || page.getSelector(site.url),
         actions: site.action || page.getAction()
     }
 } 

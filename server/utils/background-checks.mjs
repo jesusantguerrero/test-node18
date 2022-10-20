@@ -35,15 +35,17 @@ const updateCall = async (site) => {
 }
 
 export const processData = (data, selectorInstance) => {
-    const $ = Cheerio.load(data);
+    const $ = Cheerio.load(data, { 
+        decodeEntities: false
+    });
     const { selector, actions } = selectorInstance
     const $selector = $(selector);
     let { index } = actions[0]
     index = index <= 0 ? 1 : index;
     return $selector ? Array.from($selector).slice(0, index).map((selector, index) => {
-        console.log(currentAction, "currentAction")
         const currentAction = actions[index] || actions[0]
-        const {action = 'text' , value = '' } = currentAction;
-        return $(selector)[action](value)
+        const {action = 'text' , value = undefined } = currentAction;
+        
+        return value ? $(selector)[action](value) : $(selector)[action]()
     }) : [];
 }

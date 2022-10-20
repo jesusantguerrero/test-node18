@@ -7,8 +7,11 @@ export const SiteTableItem = ({ site, onEdit, onDelete, ...props }) => {
     }
 
     return <div className="flex justify-between w-full px-5 py-2 bg-gray-700">
-        <h4 className="w-full text-xl text-left uppercase">{site.title}</h4>
-        <div className="w-full"> <a href={site.url} className="underline">{site.url}</a></div>
+        <h4 className="w-full text-xl text-left uppercase">
+            <a href={site.url} target="_blank">
+                {site.title}
+            </a>
+        </h4>
         <div className="flex items-center justify-end w-full space-x-2 text-right">
             { site.results.map && 
                 site.results.map(version => <span className="px-2 py-1 bg-green-600 rounded-md"> {version} </span>)
