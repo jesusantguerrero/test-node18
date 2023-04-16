@@ -1,9 +1,6 @@
 {
     "name": "test-node18",
     "type": "module",
-    "engines": {
-        "node": "^v18.0.0"
-    },
     "scripts": {
         "dev": "npx nodemon index.js",
         "test": "node ./test/getArticles.test.js",
@@ -33,7 +30,8 @@
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-import": "^2.26.0",
         "prettier": "^2.7.1",
-        "prisma": "^4.5.0",
+        "prisma": "^4.12.0",
+        "supabase": "^1.50.4",
         "vitest": "^0.10.0",
         "vm2": "^3.9.9"
     }
