@@ -8,6 +8,7 @@ import db from "./server/libs/db.mjs";
 import { useSocket } from "./server/libs/socket.mjs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url"
+import { publish, startRedis } from "./server/libs/redis.mjs";
 const PORT = process.env.PORT || 5000;
 
 export const prisma = db;
@@ -25,6 +26,11 @@ app.get('/api/v1/articles', (_req, res) => {
 
 app.get('/api/v1', (_req, res) => {
   res.send('Checker v1!')
+})
+
+app.get('/publish', (_req, res) => {
+  publish()
+  res.send("published")
 })
 
 
@@ -46,7 +52,9 @@ app.use((req, res, next) => {
 });
 
 const { getServer } = useSocket(app)
+startRedis()
 const server = getServer()
 server.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 })
+
