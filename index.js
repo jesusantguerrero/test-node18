@@ -3,7 +3,7 @@ config()
 import cors from "cors"
 import express from "express";
 import { getArticles } from "./server/libs/index.mjs"
-import { SiteRouter, CompilerRouter, ProductRouter } from "./server/routes/index.mjs"
+import { SiteRouter, CompilerRouter, ProductRouter, DropshippingRouter} from "./server/routes/index.mjs"
 import db from "./server/libs/db.mjs";
 import { useSocket } from "./server/libs/socket.mjs";
 import { dirname, join } from "path";
@@ -20,17 +20,13 @@ app.use(express.json())
 app.use('/api/v1/sites', SiteRouter)
 app.use('/api/v1/compile', CompilerRouter)
 app.use('/api/v1/products', ProductRouter)
+app.use('/api/v1/dropshipping', DropshippingRouter)
 app.get('/api/v1/articles', (_req, res) => {
   res.send(getArticles())
 })
 
 app.get('/api/v1', (_req, res) => {
   res.send('Checker v1!')
-})
-
-app.get('/publish', (_req, res) => {
-  publish()
-  res.send("published")
 })
 
 
@@ -52,7 +48,7 @@ app.use((req, res, next) => {
 });
 
 const { getServer } = useSocket(app)
-startRedis()
+// startRedis()
 const server = getServer()
 server.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
