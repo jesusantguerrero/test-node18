@@ -1,6 +1,5 @@
 import express from 'express';
 import { siteController } from '../app/controllers/sites.mjs';
-import prisma from '../libs/db.mjs';
 import { runBackground } from '../utils/background-checks.mjs';
 import { useSocket } from '../libs/socket.mjs';
 

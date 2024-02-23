@@ -10,6 +10,10 @@ export default defineConfig({
     },
     // https://rollupjs.org/guide/en/#big-list-of-options
   },
+  base: '/react',
+  build: {
+    outDir: '../../dist/react'
+  },
   test: {
     global: true,
     environment: 'happy-dom'
