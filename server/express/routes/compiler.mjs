@@ -1,7 +1,7 @@
 import express from 'express';
-import { useSocket } from '../libs/socket.mjs';
-import { launchWorker } from '../libs/parser/workerLauncher.js';
-import { reduceEvents } from '../libs/parser/eventReducer.js';
+import { useSocket } from '../../libs/socket.mjs';
+import { launchWorker } from '../../libs/parser/workerLauncher.js';
+import { reduceEvents } from '../../libs/parser/eventReducer.js';
 
 const CompilerRouter = express.Router();
 

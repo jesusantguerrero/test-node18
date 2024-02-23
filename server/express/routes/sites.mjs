@@ -1,12 +1,12 @@
 import express from 'express';
-import { siteController } from '../app/controllers/sites.mjs';
-import { runBackground } from '../utils/background-checks.mjs';
-import { useSocket } from '../libs/socket.mjs';
+import { siteController } from '../../app/controllers/sites.mjs';
+import { runBackground } from '../../utils/background-checks.mjs';
+import { useSocket } from '../../libs/socket.mjs';
 
 const SiteRouter = express.Router();
 const {
   getSites, saveSite, update, remove,
-} = siteController(prisma);
+} = siteController();
 
 SiteRouter.get('/', async (_req, res) => {
   res.json(await getSites());
