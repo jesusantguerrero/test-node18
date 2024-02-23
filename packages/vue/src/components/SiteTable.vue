@@ -40,10 +40,10 @@ const onSubmit = async (siteData: ISiteData) => {
     ],
   };
 
-  let endpoint = `/api/sites`;
+  let endpoint = `/api/v1/sites`;
   let method = "POST";
   if (siteData.id) {
-    endpoint = `/sites/${siteData.id}`;
+    endpoint = `/api/v1/sites/${siteData.id}`;
     method = "PUT";
   }
 

@@ -1,5 +1,10 @@
 import { Hono } from "hono";
+// @ts-ignore
 import { siteController} from "../../app/controllers/sites.mjs";
+// @ts-ignore
+import { runBackground } from "../../utils/background-checks.mjs";
+// @ts-ignore
+import { useSocket } from "../../libs/socket.mjs";
 
 const Router = new Hono();
 
@@ -12,50 +17,49 @@ Router.get('/', async (c) => {
     return c.json(await getSites());
 });
   
-//   Router.post('/', async (c) => {
-//     const { body } = req;
-//     const site = await saveSite(body);
-//     return c.json(site);
-//   });
+  Router.post('/', async (c) => {
+    const body  = await c.req.json();
+    console.log(body);
+    const site = await saveSite(body);
+    return c.json(site);
+  });
   
-//   Router.patch('/:id', async (c) => {
-//     const { id } = req.params;
-//     const { body } = req;
-//     delete body.results;
-//     delete body.action;
-//     delete body.value;
-//     const site = await update(id, body);
-//     return res.json(site);
-//   });
+  Router.patch('/:id', async (c) => {
+    const  id  = c.req.param('id');
+    const  body  = await c.req.json();
+    const site = await update(id, body);
+    return c.json(site);
+  });
   
-//   Router.delete('/:id', async (c) => {
-//     const { id } = req.params;
-//     const site = await remove(id);
-//     return res.json(site);
-//   });
+  Router.delete('/:id', async (c) => {
+    const id  = c.req.param("id");
+    const site = await remove(id);
+    return c.json(site);
+  });
   
-//   Router.put('/:id', async (c) => {
-//     const { id } = req.params;
-//     const { body } = req;
-//     delete body.results;
-//     delete body.action;
-//     delete body.value;
-//     delete body.index;
-//     const site = await update(id, body);
-//     return res.json(site);
-//   });
+  Router.put('/:id', async (c) => {
+    const id  = c.req.param("id");
+    const body: Record<string, string>  = await c.req.json();
+    delete body.results;
+    delete body.action;
+    delete body.value;
+    delete body.index;
+    const site = await update(id, body);
+    return c.json(site);
+  });
   
-//   Router.post('/check', async (req, res) => {
-//     const { getInstance } = useSocket();
-//     await runBackground(true, getInstance());
-//     const sites = await getSites();
-//     res.json(sites);
-//   });
+  Router.post('/check', async (c) => {
+    const { getInstance } = useSocket();
+    await runBackground(true, getInstance());
+    const sites = await getSites();
+    c.json(sites);
+  });
   
-//   Router.get('/check', async (req, res) => {
-//     const { getInstance } = useSocket();
-//     await runBackground(false, getInstance());
-//     const sites = await getSites();
-//     res.json(sites);
-//   });
+  Router.get('/check', async (c) => {
+    const { getInstance } = useSocket();
+    await runBackground(false, getInstance());
+    const sites = await getSites();
+    c.json(sites);
+  });
+
 export const SiteRouter = Router

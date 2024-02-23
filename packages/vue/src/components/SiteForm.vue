@@ -16,10 +16,10 @@ const site = reactive({
 watch(
   () => siteData,
   (data) => {
-    site.selector = data.selector;
+    site.selector = data?.selector ?? "";
     site.title = data.title;
     site.url = data.url;
-    site.selectorTemplate = data.selectorTemplate;
+    site.selectorTemplate = data?.selectorTemplate ?? "";
   }
 );
 
@@ -56,8 +56,8 @@ const isGithubSite = computed(() => site.selectorTemplate == "github");
         <label htmlFor="selector" className="px-5 text-xl">Selector</label>
         <div
           className="flex space-x-2"
-          value="{site.selectorTemplate}"
-          onChange="{onChange}"
+          v-model="site.selectorTemplate"
+          @change="onChange"
         >
           <select
             name="selectorTemplate"
