@@ -1,4 +1,6 @@
-export const siteController = (prisma) => {
+import prisma from '../../libs/db.mjs';
+
+export const siteController = () => {
 
   const getSites =  async () => {
       return await prisma.site.findMany()
